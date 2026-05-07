@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lately — Vidya Meenakshi</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:#000;min-height:100vh;font-family:'EB Garamond',serif;}
+
+nav{text-align:center;padding:36px 0 0;}
+nav a{
+  font-family:'EB Garamond',serif;
+  font-size:17px;letter-spacing:0.2em;
+  text-transform:uppercase;color:#000;
+  text-decoration:none;margin:0 28px;
+}
+nav a{
+  padding:5px 14px;
+  border-radius:20px;
+  transition:background .2s, color .2s;
+  text-decoration:none !important;
+}
+nav a:hover{
+  background:#000;
+  color:#fff;
+  text-decoration:none !important;
+}
+
+.page{max-width:1100px;margin:0 auto;padding:56px 40px 100px;}
+
+.page-heading{
+  font-size:clamp(52px,8vw,100px);
+  font-weight:400;line-height:1;
+  margin-bottom:12px;
+  font-style:italic;
+}
+
+.page-sub{
+  font-size:clamp(15px,1.8vw,17px);
+  color:#555;font-style:italic;
+  margin-bottom:8px;
+  line-height:1.7;
+}
+
+.section-title{
+  font-size:11px;letter-spacing:0.32em;
+  text-transform:uppercase;color:#000;
+  margin:56px 0 22px;display:block;
+  border-bottom:1px solid #000;
+  padding-bottom:10px;
+}
+
+/* CARD ROW — horizontal scroll on desktop, wraps on tablet/mobile */
+.card-row{
+  display:flex;gap:16px;
+  overflow-x:auto;
+  padding-bottom:16px;
+  scrollbar-width:none;
+}
+.card-row::-webkit-scrollbar{display:none;}
+
+/* BOOK CARD */
+.card{
+  flex:0 0 148px;
+  display:flex;flex-direction:column;
+}
+.card-cover{
+  width:148px;height:210px;
+  object-fit:cover;
+  background:#F0EDE8;
+  margin-bottom:10px;
+  display:block;
+  box-shadow:0 6px 20px rgba(0,0,0,0.18);
+}
+.card-cover-sq{
+  width:148px;height:148px;
+  object-fit:cover;
+  background:#F0EDE8;
+  margin-bottom:10px;
+  display:block;
+  box-shadow:0 6px 20px rgba(0,0,0,0.18);
+}
+.card-cover-movie{
+  width:148px;height:210px;
+  object-fit:cover;
+  background:#F0EDE8;
+  margin-bottom:10px;
+  display:block;
+  box-shadow:0 6px 20px rgba(0,0,0,0.18);
+}
+.placeholder-cover{
+  width:100%;height:0;padding-bottom:140%;
+  background:#F0EDE8;
+  margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#999;text-align:center;
+  font-style:italic;position:relative;
+}
+.placeholder-cover-sq{
+  width:100%;padding-bottom:100%;height:0;
+  background:#F0EDE8;
+  margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#999;text-align:center;
+  font-style:italic;position:relative;
+}
+
+.badge{
+  display:inline-block;
+  font-size:10px;letter-spacing:0.12em;
+  border:1px solid #000;
+  padding:2px 8px;margin-bottom:8px;
+  align-self:flex-start;text-transform:uppercase;
+  font-style:normal;
+}
+.badge-reading{background:#000;color:#fff;}
+
+.card-title{
+  font-size:14px;font-weight:500;
+  line-height:1.35;margin-bottom:3px;
+}
+.card-sub{
+  font-size:12px;font-style:italic;color:#666;
+  line-height:1.4;
+}
+
+/* RESPONSIVE — tablet portrait: wrap, 4 per row */
+@media(max-width:768px){
+  nav a{margin:0 16px;font-size:15px;}
+  .page{padding:40px 24px 80px;}
+  .card-row{
+    flex-wrap:wrap;
+    overflow-x:visible;
+    gap:12px;
+  }
+  .card{flex:0 0 calc(25% - 9px);}
+  .card-cover,.card-cover-movie{width:100%;height:auto;aspect-ratio:2/3;}
+  .card-cover-sq{width:100%;height:auto;aspect-ratio:1/1;}
+}
+
+/* RESPONSIVE — mobile portrait: wrap, 3 per row */
+@media(max-width:480px){
+  nav{padding:24px 0 0;}
+  nav a{margin:0 10px;font-size:13px;letter-spacing:0.12em;}
+  .page{padding:32px 16px 60px;}
+  .section-title{margin:40px 0 16px;}
+  .card-row{gap:10px;}
+  .card{flex:0 0 calc(33.33% - 7px);}
+  .card-title{font-size:12px;}
+  .card-sub{font-size:11px;}
+}
+
+/* BOOK THOUGHT POPUP */
+.book-popup {
+  display:none;
+  position:fixed;
+  z-index:999;
+  max-width:320px;
+  background:rgba(255,255,255,0.96);
+  padding:20px 22px;
+  font-family:'EB Garamond',serif;
+  font-size:15px;
+  line-height:1.85;
+  color:#222;
+  font-style:italic;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 24px rgba(0,0,0,0.10));
+}
+.book-popup.visible {
+  display:block;
+  pointer-events:all;
+}
+
+.fav-card{cursor:pointer;}
+.fav-card:hover .card-cover{opacity:0.85;transition:opacity .2s;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="cv.html">CV</a>
+  <a href="writing.html">Writing</a>
+  <a href="create.html">Create</a>
+</nav>
+
+<div class="page">
+
+  <h1 class="page-heading">lately.</h1>
+  <p class="page-sub">books, shows, films, songs — the ones that live rent-free.</p>
+
+  <!-- CURRENTLY READING -->
+  <span class="section-title">Currently Reading</span>
+  <div class="card-row" id="currentReading"></div>
+
+  <!-- FAVOURITE BOOKS -->
+  <span class="section-title">Favourite Books</span>
+  <div class="card-row" id="favBooks"></div>
+
+  <!-- WATCHING -->
+  <span class="section-title">Shows I Always Go Back To</span>
+  <div class="card-row" id="shows"></div>
+
+
+  <!-- MUSIC -->
+  <span class="section-title">On Repeat</span>
+  <div class="card-row" id="music"></div>
+
+
+<!-- BOOK THOUGHT POPUP -->
+<div class="book-popup" id="bookPopup">
+  <span id="bookPopupText"></span>
+</div>
+
+</div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────
+const CURRENT_READING = [
+  { title:"The Prophet",                       author:"Khalil Gibran",      isbn:"9780394404288", thought:"The chapter connecting houses to the human body and the soul genuinely made me stop and sit with it for a while after. The chapter on marriage moved me in a different way entirely, quietly and completely, and I have already made a private note that it belongs in a future wedding speech. Mine, specifically." },
+  { title:"Flowers for Algernon",              author:"Daniel Keyes",       isbn:"9780156030304" },
+  { title:"The Weary Blues",                   author:"Langston Hughes",    isbn:"9780486849010" },
+  { title:"Agua Viva",                         author:"Clarice Lispector",  isbn:"9780811219907" },
+  { title:"The Life and Death of Anne Boleyn", author:"Eric Ives",          isbn:"9781405134637" },
+];
+
+const FAV_BOOKS = [
+  { title:"Remarkably Bright Creatures", author:"Shelby Van Pelt", isbn:"9780063204157",
+    thought:"The octopus monologues alone are worth the read, and I will not lie, I cried. Properly cried. I recently came across the trailer for the film adaptation and I am genuinely excited. Such a fun and heartwarming read." },
+  { title:"Foster", author:"Claire Keegan", isbn:"9780802160140",
+    thought:"I have a soft spot for books that break you open slowly, the ones with soul and emotional weight. Foster is exactly that. It left me with a feeling I can only describe as warmth that borders on yearning, like drinking warm milk with honey in your grandma’s kitchen on a cool carefree summer evening." },
+  { title:"Small Things Like These", author:"Claire Keegan", isbn:"9780802158741",
+    thought:"If you have read Foster and loved it, this one will find you the same way. I discovered Claire Keegan through a Jack Edwards video and I am so grateful I did. This is a quiet, haunting read that sends you straight to Google the moment it ends." },
+  { title:"The Bluest Eye", author:"Toni Morrison", isbn:"9780452282193",
+    thought:"Toni Morrison needs no introduction. What she does with language, the way she holds tenderness and devastation in the same breath, is something I have rarely encountered elsewhere. Reading this felt like living inside Ohio itself. The description of childhood in these pages, its wonder and its cruelty, stays with you." },
+  { title:"A Man Called Ove", author:"Fredrik Backman", isbn:"9781476738024",
+    thought:"Fredrik Backman writes with a generosity toward his characters that feels almost radical. My favourite line, from a scene I still think about: “She laughed and laughed and laughed until the vowels were rolling across the walls and floors as if they meant to do away with the laws of time and space.” And also Chapter 28, it is breathtakingly beautiful the way Backman thinks about cars and lives." },
+  { title:"To Kill a Mockingbird", author:"Harper Lee", isbn:"9780061120084",
+    thought:"The early chapters, the slow building of atmosphere and mystery, are some of the finest I have read. And then there is this line, which I keep returning to: “Until I feared I would lose it, I never loved to read. One does not love breathing.”" },
+];
+
+const SHOWS = [
+  { title:"The Middle",       query:"The Middle",       entity:"tvSeason",
+    thought:"My favourite episode is the one where Sue graduates from high school. There is a wonderful montage of all her failed attempts, all her small quiet achievements, and how through it all she never loses hope. It plays out to You Gotta Make Your Kind of Music by Shirley Bassey and the show absolutely peaked in that moment." },
+  { title:"Sex and the City", query:"Sex and the City", entity:"tvSeason",
+    thought:"This show has not only consumed me but has also made me want to live in 1990s Manhattan in impractical shoes and write a column on relationships so badly. How Carrie Bradshaw could afford so many shoes, let alone that many Manolo Blahniks, remains one of the greatest mysteries. But she has given me a very real appreciation for a good heel. Though I adored Samantha, Miranda and Charlotte more, the writer in me cannot forget Carrie’s iconic line: “Does the new man really exist? Perhaps he is just the old man renamed and repackaged by a clever PR woman.”" },
+];
+
+
+const SONGS = [
+  { title:"Chicago",               artist:"Michael Jackson", query:"Michael Jackson Xscape",          entity:"album" },
+  { title:"Human Nature",          artist:"Michael Jackson", query:"Michael Jackson Thriller",         entity:"album" },
+  { title:"Love Maybe",            artist:"Melomance",       query:"Melomance 사랑인가봐",              entity:"album", country:"kr" },
+  { title:"La La La",              artist:"SG Wannabe",      query:"SG Wannabe",                       entity:"album", country:"kr" },
+  { title:"My Love Mine All Mine", artist:"Mitski",          query:"Mitski Land Is Inhospitable",     entity:"album" },
+  { title:"Holy Ground",           artist:"Taylor Swift",    query:"Taylor Swift Red",                entity:"album" },
+];
+
+// ── BOOK COVERS via Open Library ISBN ─────────────────────
+function bookImgUrl(isbn) {
+  return `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`;
+}
+
+function renderBookCard(book, badge) {
+  const url = bookImgUrl(book.isbn);
+  const ph = `<div class='placeholder-cover'>${book.title}</div>`;
+  const clickAttr = book.thought
+    ? `data-thought="${book.thought.replace(/"/g,'&quot;')}" `
+    : '';
+  const extraClass = book.thought ? ' fav-card' : '';
+  return `
+    <div class="card${extraClass}" ${clickAttr}>
+      <img class="card-cover" src="${url}" alt="${book.title}"
+           onerror="this.style.display='none';this.insertAdjacentHTML('afterend','${ph.replace(/'/g,"\\'")}')">
+      ${badge ? `<span class="badge badge-reading">Reading</span>` : ''}
+      <div class="card-title">${book.title}</div>
+      <div class="card-sub">${book.author}</div>
+    </div>`;
+}
+
+document.getElementById('currentReading').innerHTML =
+  CURRENT_READING.map(b => renderBookCard(b, true)).join('');
+document.getElementById('favBooks').innerHTML =
+  FAV_BOOKS.map(b => renderBookCard(b, false)).join('');
+attachThoughtHovers();
+
+
+async function renderMovies(items, containerId) {
+  const container = document.getElementById(containerId);
+  const cards = await Promise.all(items.map(async item => {
+    const art = await wikiThumb(item.wiki);
+    const cover = art
+      ? `<img class="card-cover-movie" src="${art}" alt="${item.title}"
+             onerror="this.outerHTML='<div class=\'placeholder-cover\'>${item.title}</div>'">`
+      : `<div class="placeholder-cover">${item.title}</div>`;
+    return `<div class="card">${cover}<div class="card-title">${item.title}</div></div>`;
+  }));
+  container.innerHTML = cards.join('');
+}
+
+// ── iTunes API — shows, music ─────────────────────────────
+async function itunesArt(term, media, country, entity) {
+  const c = country || 'us';
+  const ent = entity ? `&entity=${entity}` : '';
+  try {
+    const r = await fetch(
+      `https://itunes.apple.com/search?term=${encodeURIComponent(term)}&media=${media}${ent}&limit=3&country=${c}`
+    );
+    const d = await r.json();
+    if (d.results && d.results.length > 0) {
+      const art = d.results[0].artworkUrl512 || d.results[0].artworkUrl100 || d.results[0].artworkUrl60;
+      return art ? art.replace(/\d+x\d+(bb|\.jpg)/, '600x600bb.jpg') : null;
+    }
+  } catch(e) {}
+  return null;
+}
+
+async function renderItunes(items, containerId, media, isMusic) {
+  const container = document.getElementById(containerId);
+  const cards = await Promise.all(items.map(async item => {
+    const coverClass = isMusic ? 'card-cover-sq' : 'card-cover-movie';
+    const placeholderClass = isMusic ? 'placeholder-cover-sq' : 'placeholder-cover';
+    let cover;
+    if (item.query === null) {
+      cover = `<div class="${placeholderClass}" style="display:flex;align-items:center;justify-content:center;font-size:13px;font-style:italic;color:#888;text-align:center;padding:16px;font-family:'EB Garamond',serif;">${item.title}</div>`;
+    } else {
+      let art = await itunesArt(item.query, media, item.country, item.entity);
+      if (!art && item.country) art = await itunesArt(item.query, media, 'us', item.entity);
+      cover = art
+        ? `<img class="${coverClass}" src="${art}" alt="${item.title}"
+               onerror="this.outerHTML='<div class=\\'${placeholderClass}\\'>${item.title}</div>'">`
+        : `<div class="${placeholderClass}">${item.title}</div>`;
+    }
+    const sub = item.artist || '';
+    const thoughtAttr = item.thought ? `data-thought="${item.thought.replace(/"/g,'&quot;')}"` : '';
+    return `
+      <div class="card" ${thoughtAttr}>
+        ${cover}
+        <div class="card-title">${item.title}</div>
+        ${sub ? `<div class="card-sub">${sub}</div>` : ''}
+      </div>`;
+  }));
+  container.innerHTML = cards.join('');
+}
+
+renderItunes(SONGS, 'music', 'music', true);
+renderItunes(SHOWS, 'shows', 'tvShow', false).then(attachThoughtHovers);
+
+// ── THOUGHT POPUP ────────────────────────────────────────
+let hideTimer = null;
+
+function showThoughtPopup(e, card) {
+  clearTimeout(hideTimer);
+  const thought = card.getAttribute('data-thought');
+  if (!thought) return;
+  const popup = document.getElementById('bookPopup');
+  document.getElementById('bookPopupText').textContent = thought;
+  const x = Math.min(e.clientX + 16, window.innerWidth - 345);
+  const y = Math.min(e.clientY - 20, window.innerHeight - 220);
+  popup.style.left = x + 'px';
+  popup.style.top  = Math.max(y, 10) + 'px';
+  popup.classList.add('visible');
+}
+
+function scheduleHide() {
+  hideTimer = setTimeout(function() {
+    document.getElementById('bookPopup').classList.remove('visible');
+  }, 120);
+}
+
+function attachThoughtHovers() {
+  document.querySelectorAll('[data-thought]').forEach(function(card) {
+    card.addEventListener('mouseenter', function(e){ showThoughtPopup(e, card); });
+    card.addEventListener('mousemove',  function(e){ showThoughtPopup(e, card); });
+    card.addEventListener('mouseleave', scheduleHide);
+  });
+  const popup = document.getElementById('bookPopup');
+  popup.addEventListener('mouseenter', function(){ clearTimeout(hideTimer); });
+  popup.addEventListener('mouseleave', scheduleHide);
+}
+
+// attach for books (sync) immediately
+attachThoughtHovers();
+</script>
+</body>
+</html>

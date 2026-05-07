@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing — Vidya Meenakshi</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:#000;min-height:100vh;display:flex;flex-direction:column;font-family:'EB Garamond',serif;}
+
+nav{text-align:center;padding:36px 0 0;}
+nav a{font-family:'EB Garamond',serif;font-size:17px;letter-spacing:0.2em;text-transform:uppercase;color:#000;text-decoration:none;margin:0 22px;}
+nav a{
+  padding:5px 14px;
+  border-radius:20px;
+  transition:background .2s, color .2s;
+  text-decoration:none !important;
+}
+nav a:hover{
+  background:#000;
+  color:#fff;
+  text-decoration:none !important;
+}
+
+.page{max-width:900px;margin:0 auto;padding:56px 40px 100px;}
+
+.page-heading{font-size:clamp(52px,8vw,100px);font-weight:400;line-height:1;margin-bottom:12px;font-style:italic;}
+
+.section-title{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:#000;margin:56px 0 28px;display:block;border-bottom:1px solid #000;padding-bottom:10px;}
+
+/* BLOG GRID — cards only, no content inside */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+
+.blog-card{border:1px solid #E8E8E8;cursor:pointer;transition:box-shadow .2s;}
+.blog-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);}
+.blog-card.active{border-color:#000;}
+
+.blog-card-cover{width:100%;height:180px;object-fit:cover;display:block;background:#F0EDE8;}
+.blog-card-body{padding:14px 16px 16px;}
+.blog-tag{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#888;margin-bottom:6px;display:block;}
+.blog-card-title{font-size:16px;font-weight:500;line-height:1.4;margin-bottom:5px;}
+.blog-card-date{font-size:12px;font-style:italic;color:#888;}
+.blog-card-hint{font-size:11px;color:#aaa;margin-top:8px;font-style:italic;}
+
+/* ARTICLE VIEWER — appears below grid when a card is clicked */
+.article-viewer{display:none;margin-top:0;border:1px solid #E8E8E8;border-top:3px solid #000;padding:36px 40px 40px;background:#FAFAF8;}
+.article-viewer.open{display:block;}
+
+.article-content{display:none;}
+.article-content.active{display:block;}
+
+.article-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;}
+.article-title-lg{font-size:22px;font-weight:500;line-height:1.3;max-width:80%;}
+.close-btn{font-family:'EB Garamond',serif;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;color:#aaa;border:none;background:none;padding:0;flex-shrink:0;margin-left:16px;border-bottom:1px solid #ccc;}
+.close-btn:hover{color:#000;border-color:#000;}
+
+.article-img{width:100%;max-height:400px;object-fit:cover;margin-bottom:12px;display:block;}
+.article-caption{font-size:12px;font-style:italic;color:#888;margin-bottom:22px;display:block;}
+.article-body{font-size:16px;line-height:2;color:#000;}
+.article-body p{margin-bottom:18px;}
+.article-body strong{font-weight:600;}
+.article-body em{font-style:italic;}
+.article-body h4{font-size:17px;font-weight:500;margin:24px 0 8px;}
+.article-video{width:100%;aspect-ratio:16/9;border:none;margin:18px 0;}
+
+/* POETRY */
+.poetry-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+.poem-card{border:1px solid #E8E8E8;padding:20px 18px;cursor:pointer;transition:box-shadow .2s;}
+.poem-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.07);}
+.poem-card.active{border-color:#000;}
+.poem-year{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#aaa;margin-bottom:8px;display:block;}
+.poem-title{font-size:17px;font-weight:500;line-height:1.35;margin-bottom:6px;}
+.poem-hint{font-size:11px;font-style:italic;color:#bbb;}
+
+.poem-viewer{display:none;margin-top:0;border:1px solid #E8E8E8;border-top:3px solid #000;padding:36px 40px 40px;background:#FAFAF8;}
+.poem-viewer.open{display:block;}
+.poem-content{display:none;}
+.poem-content.active{display:block;}
+.poem-text{font-size:17px;line-height:2.2;color:#000;white-space:pre-wrap;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav a{margin:0 14px;font-size:15px;}
+  .page{padding:40px 24px 80px;}
+  .blog-grid{grid-template-columns:repeat(2,1fr);}
+  .article-viewer,.poem-viewer{padding:24px 20px 28px;}
+}
+@media(max-width:480px){
+  nav{padding:24px 0 0;}
+  nav a{margin:0 8px;font-size:13px;letter-spacing:0.1em;}
+  .page{padding:32px 16px 60px;}
+  .blog-grid{grid-template-columns:1fr;}
+  .poetry-grid{grid-template-columns:1fr 1fr;}
+  .section-title{margin:40px 0 18px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="cv.html">CV</a>
+  <a href="lately.html">Lately</a>
+  <a href="create.html">Create</a>
+</nav>
+
+<div class="page">
+  <h1 class="page-heading">writing.</h1>
+
+  <!-- ── BLOG ── -->
+  <span class="section-title">Blog</span>
+  <div class="blog-grid">
+    <div class="blog-card" id="card-heart" onclick="openArticle('heart')">
+      <img class="blog-card-cover" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/02/hab-14_uc_f.jpg" alt="Heart and Bottle">
+      <div class="blog-card-body">
+        <span class="blog-tag">Popular Culture</span>
+        <div class="blog-card-title">The heart and the bottle: A beautiful lesson about loss and grief</div>
+        <div class="blog-card-date">3 February 2024</div>
+        <div class="blog-card-hint">Click to read ↓</div>
+      </div>
+    </div>
+    <div class="blog-card" id="card-bridgerton" onclick="openArticle('bridgerton')">
+      <img class="blog-card-cover" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/image.png" alt="Bridgerton">
+      <div class="blog-card-body">
+        <span class="blog-tag">Popular Culture</span>
+        <div class="blog-card-title">Lady Whistledown in the spotlight: What is happening in Bridgerton season 3</div>
+        <div class="blog-card-date">20 May 2024</div>
+        <div class="blog-card-hint">Click to read ↓</div>
+      </div>
+    </div>
+    <div class="blog-card" id="card-runner" onclick="openArticle('runner')">
+      <img class="blog-card-cover" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/26be4e1613.jpg.webp" alt="Lovely Runner">
+      <div class="blog-card-body">
+        <span class="blog-tag">Popular Culture</span>
+        <div class="blog-card-title">Everything You Need to Know About the Hit Drama Lovely Runner</div>
+        <div class="blog-card-date">23 May 2024</div>
+        <div class="blog-card-hint">Click to read ↓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article viewer -->
+  <div class="article-viewer" id="articleViewer">
+
+    <div class="article-content" id="art-heart">
+      <div class="article-top">
+        <div class="article-title-lg">The heart and the bottle: A beautiful lesson about loss and grief</div>
+        <button class="close-btn" onclick="closeArticle()">Close ✕</button>
+      </div>
+      <img class="article-img" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/02/screenshot-2024-02-02-at-9.15.03-pm.png" alt="">
+      <div class="article-body">
+        <p><strong>The Heart and the Bottle</strong> is an exquisitely thoughtful and heartwarming tale about the endearing bond between a young girl and her grandfather. The story unfolds with the protagonist embarking on enchanting escapades alongside her grandad, venturing into lush forests, stargazing in moonlit parks, and enjoying carefree swims in the ocean.</p>
+        <p>The illustration in a picture book holds immense significance, just like the story itself. As noted by children's literature scholars Maria Nikolajeva and Carole Scott, the distinctive nature of picture books as an art form is rooted in the fusion of visual and verbal elements. Oliver Jeffers truly excels in harmonizing these aspects, crafting captivating narratives. Through intricate montages of imagination portrayed in delicate circles, readers can appreciate the illustrator's heartfelt commitment to depicting the girl's innocence and the wonders of imagination. The gentle pastel hues and airy, tender sketches make it an ideal choice for a comforting and serene reading experience.</p>
+        <p>Apart from the stunning visuals that immediately captivate the audience, the story itself is meticulously crafted in a way that resonates with both the young and the old. It's expressed with such artistry, making everything literal yet intricately beautiful. The protagonist, after the loss of her grandfather, carries her heart in a bottle hung around her neck, symbolizing the act of "bottling up feelings." This serves as a powerful emblem for children grappling with emotions and loss.</p>
+        <p>Death is an early experience for many children, often through the loss of a pet or grandparent. While some may feel it's too complex of a concept for 5–6 year olds, this book's hopeful narrative enables children to understand death, accept it, and embrace change as something natural, inevitable, and ultimately beautiful.</p>
+        <p>Rather than dwelling on absence, the story delicately illustrates the importance of filling the voids in our life with boundless love and cherished memories, creating a space filled with warmth and nostalgia. All in all, it's truly a heartwarming book with imaginative illustrations and a valuable lesson that resonates with both children and adults for a lifetime.</p>
+      </div>
+    </div>
+
+    <div class="article-content" id="art-bridgerton">
+      <div class="article-top">
+        <div class="article-title-lg">Lady Whistledown in the spotlight: What is happening in Bridgerton season 3</div>
+        <button class="close-btn" onclick="closeArticle()">Close ✕</button>
+      </div>
+      <img class="article-img" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/image.png" alt="Bridgerton">
+      <span class="article-caption">Hannah Dodd as Francesca Bridgerton and Nicola Coughlan as Penelope Featherington — Laurence Cendrowicz/Netflix</span>
+      <div class="article-body">
+        <p>Hold onto your bonnets, dearest gentle readers—Bridgerton Season 3 is back, and it's more dazzling than ever. Premiering on May 16th, this season unfurls new feathers and blooms with romance that's sure to keep us all talking.</p>
+        <p>This time, it's Penelope Featherington, portrayed by the ever-charming Nicola Coughlan, who takes center stage. Unlike Daphne <strong>(Phoebe Dynevor)</strong>, Kate Sharma <strong>(Simone Ashley)</strong>, or this season's Francesca Bridgerton, Penelope's third year in the marriage market is notably devoid of suitors. But this wallflower's sights are set firmly on her childhood friend, Colin Bridgerton.</p>
+        <p>Colin, fresh from his globetrotting adventures, returns to London to a flurry of female admirers. Meanwhile, Penelope remains in the shadows, observing the societal frenzy from her usual corner.</p>
+        <p>Over at the Featherington household, things are in dire straits, with the family desperate for a male heir to keep the estate afloat. But Penelope has other plans — determined to find a husband and leave her family home. Thus, in regencified and Princess Diaries fashion, Penelope ditches her infamous bright yellow gowns for colors that intriguingly match the Bridgerton palette.</p>
+        <p>The drama peaks at the season's first ball when mean girl Cressida Cowper publicly humiliates Penelope. Taking refuge in her alter ego, Lady Whistledown, she vents her frustrations in the scandal sheet, leaving Colin and best friend Eloise in shock. Colin, in a sincere bid to make amends, offers to help Penelope secure a husband.</p>
+        <p>In the season's final two episodes, Penelope catches the eye of the wealthy newcomer, Lord Debling <strong>(Sam Phillips)</strong>. Despite winning his affection, Lord Debling senses her heart lies elsewhere. In a heartfelt carriage exchange, Colin apologizes and confesses his true feelings, culminating in a romantic proposal.</p>
+        <img class="article-img" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/image-1.png" alt="">
+        <span class="article-caption">Luke Newton as Colin Bridgerton and Nicola Coughlan as Penelope Featherington — Liam Daniels/Netflix</span>
+        <p>As the curtain falls on Part 1 of Season 3, Colin's vow to unmask Lady Whistledown looms large.</p>
+      </div>
+    </div>
+
+    <div class="article-content" id="art-runner">
+      <div class="article-top">
+        <div class="article-title-lg">Everything You Need to Know About the Hit Drama Lovely Runner</div>
+        <button class="close-btn" onclick="closeArticle()">Close ✕</button>
+      </div>
+      <img class="article-img" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/26be4e1613.jpg.webp" alt="Lovely Runner">
+      <span class="article-caption">Kim Hye Yoon as Im Sol and Byeon Woo Seok as Ryu SunJae — credits: tvN</span>
+      <div class="article-body">
+        <p><strong>Lovely Runner</strong> (선재 업고 튀어) is the latest sensation sweeping South Korean television. Directed by the acclaimed <strong>Yoon Jong-ho</strong>, known for <em>Guardian: The Lonely and Great God</em> and <em>Flower of Evil</em>, it debuted on tvN on April 8, 2024. The series follows Im Sol, who travels between the past and present to alter the fate of her beloved Ryu Sun-Jae.</p>
+        <p>Drawing inspiration from classics like <em>A Time Called You</em> and <em>Twinkling Watermelon</em>, the series is a delightful trip down memory lane. Set in the 2000s with nostalgia-inducing elements, it is the genuine heartfelt love story between Im-Sol and Sun-Jae that truly steals the show.</p>
+        <h4>Plot Overview</h4>
+        <p>The series kicks off with Sun-Jae, a member of the popular boy band Eclipse, giving a radio interview. He calls Im-Sol at the hospital recovering from a tragic accident, and gently encourages her to hold onto hope. This seemingly insignificant call sets off a chain reaction that forever alters their lives.</p>
+        <p>Fast forward a few years — Im-Sol has become a dedicated fan of Sun-Jae, but her happiness is short-lived as Sun-Jae takes his own life. In a desperate attempt to save him, she drops a watch at the hospital that turns out to be a time-travel device, propelling her into the past. Armed with knowledge of future events, she strives to prevent his death.</p>
+        <iframe class="article-video" src="https://www.youtube.com/embed/5kk0dYa8Ccc" title="Lovely Runner trailer" allowfullscreen></iframe>
+        <h4>How it all began</h4>
+        <p>The drama traces its origins back to <strong>Kim Bbang's</strong> webtoon <em>Tomorrow's Best</em>, adapted by <strong>Lee Sieun</strong>, known for <em>True Beauty</em>. The overwhelming success of Lovely Runner has cemented Lee Sieun's status as a powerhouse in the K-drama industry.</p>
+        <img class="article-img" src="https://vidyawrites2.wordpress.com/wp-content/uploads/2024/05/mks1z3-_leh5maefiitnwoy1o4iyk4ef.jpg.webp" alt="Tomorrow's Best webtoon">
+        <span class="article-caption">Tomorrow's Best webtoon poster — credits: Naver</span>
+      </div>
+    </div>
+
+  </div><!-- end article viewer -->
+
+  <!-- ── POETRY ── -->
+  <span class="section-title">Poetry</span>
+  <div class="poetry-grid">
+    <div class="poem-card" id="pcard-p1" onclick="openPoem('p1')"><span class="poem-year">2023</span><div class="poem-title">Metamorphopsia</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p2" onclick="openPoem('p2')"><span class="poem-year">2022</span><div class="poem-title">Sleepatorium</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p3" onclick="openPoem('p3')"><span class="poem-year">2024</span><div class="poem-title">11 PM at the doctor's office</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p4" onclick="openPoem('p4')"><span class="poem-year">2023</span><div class="poem-title">The golden shovel: Achilles heel</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p5" onclick="openPoem('p5')"><span class="poem-year">2025</span><div class="poem-title">5 PM SGT</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p6" onclick="openPoem('p6')"><span class="poem-year">2022</span><div class="poem-title">Prayer</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p7" onclick="openPoem('p7')"><span class="poem-year">2024</span><div class="poem-title">Rage</div><div class="poem-hint">Click to read</div></div>
+    <div class="poem-card" id="pcard-p8" onclick="openPoem('p8')"><span class="poem-year">2025</span><div class="poem-title">Innocence</div><div class="poem-hint">Click to read</div></div>
+  </div>
+
+  <!-- Poem viewer -->
+  <div class="poem-viewer" id="poemViewer">
+    <div class="poem-content" id="poem-p1"><div class="article-top"><div class="article-title-lg">Metamorphopsia</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+Behind the corpse of the treehouse
+blowing the dead bird's
+beak like a conch shell
+in a funeral procession, there
+is a vision of our old front
+porch, jailed behind
+a chicken fence, the air
+reeks pungent with the smell
+of puke so heavy,
+you lead my hand to
+the center of the house and
+show me the faces of a
+disfigured man and woman
+emerging from the mosaic tiles,
+peering from the static
+tv noise of a pattern, like
+stale confetti trapped in porcelain
+amber unable to escape</div></div>
+
+    <div class="poem-content" id="poem-p2"><div class="article-top"><div class="article-title-lg">Sleepatorium</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+The night's jagged teeth gnaw
+at the flesh to the bone,
+eyelids fissure, crack open
+and spill like egg whites
+sleep gyrates wildly at the foot of the staircase,
+its mouth agape with razor-sharp fangs.
+
+For years, he battled to silence
+the whispers of the nightjars,
+their crooning incantations
+filling his ears and the ceaseless
+chiming of the parlours' clock.
+
+Once again tonight, as the
+deafening silence trumpets with
+dripping faucet, his arms stay busy
+putting the ghosts of yesteryear
+back into the closet, and the
+faces he thought he had forgotten
+now circle in a dizzying array
+like a zoetrope, spinning overhead
+
+His body quivers
+struggling to break free,
+his feet move involuntarily,
+writhing and trembling
+as all the sheep he once
+counted and cursed now bleat
+through the crevices of their
+monstrous teeth, creeping ever
+so slowly over his sheets</div></div>
+
+    <div class="poem-content" id="poem-p3"><div class="article-top"><div class="article-title-lg">11 PM at the doctor's office</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+Swaddling your warm and lean
+fingers around my clenched fist,
+you clasp it firmly to your
+breastbone,
+as if pausing in mid-prayer,
+Ensuring my safety and claim,
+to know that I won't slide
+into the gaping maw of
+the doctor's chair.
+
+You swathe me with your
+gentle linen shawl, so when
+the fabric fuses with my skin
+and my sweat mixes with the
+essence of
+sandalwood and saffron
+that once sat in the
+hollows of your collarbone,
+you'll know that I'm closer
+to you than I've ever been
+
+So you sleep now,
+with your mouth agape
+Like the shoes you leave
+at the temple's threshold,
+humming hymns of hope,
+trailing wisps of sacred ash
+that permeate the air</div></div>
+
+    <div class="poem-content" id="poem-p4"><div class="article-top"><div class="article-title-lg">The golden shovel: Achilles heel</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+Under the midday sun my
+heart goes out like a dying candle
+The lush green and the pure sky burns
+my eyes, it feels like winter at
+a summer scene. No! but both
+cannot exist together! If there are two ends
+they must not see each other across the same table. It
+is not how nature is built! You must not defy nature's will
+because a heart can-not
+freeze at the sight of a beautiful summer, it must last
+like the sunflower. Keep staring at the
+blinding sun, the beautiful blinding sun. Because at night
+it doesn't matter if you scream and whimper. But
+you must smile because you can smile so ah
+-old the anchor of joy, and you will be my-
+-stified to realize that the beastly foes,
+of mind and
+your worries have disappeared! Oh
+but what if they reappear at night? My
+dear, life is friend-
+lier when you hide your heart and what it
+tells. You must accept what life gives
+you. Now! put on a
+face that's lovely
+when we ascend the aisle of light.</div></div>
+
+    <div class="poem-content" id="poem-p5"><div class="article-top"><div class="article-title-lg">5 PM SGT</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+a noise,
+
+a shriek,
+                                            and then
+silence.
+
+Four        homely
+
+white       walls
+                                             yet
+the phone sings no songs.
+
+Eyes watch like a hawk, as the
+
+clock
+slows
+down.
+
+Crease lines mark the finishing line.
+
+Half    -     done
+batter sits
+                                                                     neglected
+                                                                  in the grinder.
+
+recall,
+the reminder.
+
+Yet
+
+the phone sings no songs.</div></div>
+
+    <div class="poem-content" id="poem-p6"><div class="article-top"><div class="article-title-lg">Prayer</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+Knee deep in the
+blinding light of water
+She stood,
+Hands clutched
+to her breastbone
+as if frozen
+as if stopping
+her heart from
+dropping
+out of the ribs
+and sink in the ocean
+
+She let loose the stolen stars,
+tucked in her waist
+and ordered them to fly
+to the skies
+where only her child
+can see,
+summoned the magpies
+and the robins
+and the
+nightingale
+to never miss a morning
+of lullabies
+
+She made a quick prayer
+caressed the spine of the
+to take her away
+You need not rock
+Need not cradle
+Need not soothe me
+with your waves so gentle
+Swallow me whole
+Wash the lifeline out of my palms
+But promise to stay and cherish my young</div></div>
+
+    <div class="poem-content" id="poem-p7"><div class="article-top"><div class="article-title-lg">Rage</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+Neither the pandits
+Nor the claptraps
+believed that she
+could speak to the ocean
+But she didn't mind what the people said
+
+She knew very well
+that the roles of
+the eaten can reverse and
+repeat
+(rep) eat
+rip,
+eat
+She knew
+She could
+rip, eat
+what took her away,
+what enjoyed her
+slowly, every day,
+under the unfinished
+light of the wake
+for its divine
+piecemeal hours
+
+At night,
+when all the wise,
+the innocent and the old
+disappear into night's
+gallows,
+fluttering away in it's underwings
+she burrows her toes
+in the burning evening sand
+and watches
+the blood black ocean
+scramble,
+to wash
+her feet,
+pleading for pity
+to be relieved
+
+It trembles,
+roaring in its throes.
+It could not fathom
+the brewing
+tempest that was
+not its own</div></div>
+
+    <div class="poem-content" id="poem-p8"><div class="article-top"><div class="article-title-lg">Innocence</div><button class="close-btn" onclick="closePoem()">Close ✕</button></div><div class="poem-text">
+What
+blood dwells
+spills,
+heals
+and betrays
+the fragmented red
+without a trace?
+
+Who
+smiles
+scolds
+then cocoons the soul
+in the warmth of the saree's womb
+and promise to never let go?
+
+Who
+leaves the house to
+cave a home
+sculpt a holy shrine
+of turmeric,
+pray for the fire
+in the hearth,
+and fill it with warmth?
+
+Who
+prays the longest
+even when nothing is heard
+under the deafening hymns of hope,
+even when all blurs
+in the suffocating fog</div></div>
+
+  </div><!-- end poem viewer -->
+
+</div><!-- end page -->
+
+<script>
+// ── ARTICLES ──────────────────────────────────────────
+let currentArticle = null;
+
+function openArticle(id) {
+  const viewer = document.getElementById('articleViewer');
+  // If same card clicked again, close
+  if (currentArticle === id) { closeArticle(); return; }
+  // Hide all, show selected
+  document.querySelectorAll('.article-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.blog-card').forEach(el => el.classList.remove('active'));
+  document.getElementById('art-' + id).classList.add('active');
+  document.getElementById('card-' + id).classList.add('active');
+  viewer.classList.add('open');
+  currentArticle = id;
+  // Scroll into view
+  setTimeout(() => viewer.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+}
+
+function closeArticle() {
+  document.getElementById('articleViewer').classList.remove('open');
+  document.querySelectorAll('.article-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.blog-card').forEach(el => el.classList.remove('active'));
+  currentArticle = null;
+}
+
+// ── POEMS ─────────────────────────────────────────────
+let currentPoem = null;
+
+function openPoem(id) {
+  const viewer = document.getElementById('poemViewer');
+  if (currentPoem === id) { closePoem(); return; }
+  document.querySelectorAll('.poem-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.poem-card').forEach(el => el.classList.remove('active'));
+  document.getElementById('poem-' + id).classList.add('active');
+  document.getElementById('pcard-' + id).classList.add('active');
+  viewer.classList.add('open');
+  currentPoem = id;
+  setTimeout(() => viewer.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+}
+
+function closePoem() {
+  document.getElementById('poemViewer').classList.remove('open');
+  document.querySelectorAll('.poem-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.poem-card').forEach(el => el.classList.remove('active'));
+  currentPoem = null;
+}
+</script>
+</body>
+</html>

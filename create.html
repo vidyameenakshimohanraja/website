@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create — Vidya Meenakshi</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:#000;min-height:100vh;display:flex;flex-direction:column;font-family:'EB Garamond',serif;}
+
+nav{text-align:center;padding:36px 0 0;}
+nav a{font-family:'EB Garamond',serif;font-size:17px;letter-spacing:0.2em;text-transform:uppercase;color:#000;text-decoration:none;margin:0 28px;}
+nav a{
+  padding:5px 14px;
+  border-radius:20px;
+  transition:background .2s, color .2s;
+  text-decoration:none !important;
+}
+nav a:hover{
+  background:#000;
+  color:#fff;
+  text-decoration:none !important;
+}
+
+.page{max-width:1000px;margin:0 auto;padding:56px 40px 100px;}
+
+.page-heading{font-size:clamp(52px,8vw,100px);font-weight:400;line-height:1;margin-bottom:12px;font-style:italic;}
+
+.section-title{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:#000;margin:56px 0 28px;display:block;border-bottom:1px solid #000;padding-bottom:10px;}
+
+/* ART GRID */
+.art-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+
+.art-card{cursor:pointer;transition:transform .25s ease, opacity .2s;}
+.art-card:hover{transform:rotate(-3deg);opacity:.9;}
+
+.art-thumb{
+  width:100%;
+  height:380px;
+  object-fit:cover;
+  display:block;
+  background:#F0EDE8;
+}
+
+.art-name{
+  font-family:'EB Garamond',serif;
+  font-size:17px;
+  font-weight:500;
+  color:#000;
+  margin-top:12px;
+  text-align:center;
+}
+
+/* LIGHTBOX */
+.lightbox{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:999;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+}
+.lightbox.open{display:flex;}
+
+.lightbox-inner{
+  background:#fff;
+  max-width:700px;
+  width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:40px 40px 36px;
+  position:relative;
+}
+
+.lightbox-title{
+  font-family:'EB Garamond',serif;
+  font-size:24px;
+  font-weight:500;
+  color:#000;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.lightbox-img{
+  width:100%;
+  max-height:520px;
+  object-fit:contain;
+  display:block;
+  background:#F8F6F2;
+}
+
+.lightbox-desc{
+  font-family:'EB Garamond',serif;
+  font-size:15px;
+  font-style:italic;
+  color:#666;
+  margin-top:16px;
+  text-align:center;
+  line-height:1.7;
+}
+
+.lightbox-close{
+  position:absolute;
+  top:16px;right:20px;
+  font-family:'EB Garamond',serif;
+  font-size:13px;letter-spacing:0.2em;
+  text-transform:uppercase;
+  cursor:pointer;color:#aaa;
+  border:none;background:none;
+  padding:0;
+}
+.lightbox-close:hover{color:#000;}
+
+.page-sub{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(15px,1.8vw,17px);
+  font-style:italic;
+  color:#666;
+  margin-bottom:8px;
+  line-height:1.7;
+}
+
+/* BLENDER GRID */
+.blender-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+.blender-item video{width:100%;background:#F0EDE8;display:block;max-width:100%;}
+.blender-caption{font-size:15px;font-weight:500;margin-top:10px;}
+.blender-sub{font-size:13px;font-style:italic;color:#666;margin-top:3px;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav a{margin:0 16px;font-size:15px;}
+  .page{padding:40px 24px 80px;}
+  .art-grid{gap:18px;}
+  .art-thumb{height:260px;}
+  .blender-grid{grid-template-columns:1fr;}
+  .lightbox-inner{padding:28px 24px 24px;}
+}
+@media(max-width:480px){
+  nav{padding:24px 0 0;}
+  nav a{margin:0 10px;font-size:13px;letter-spacing:0.12em;}
+  .page{padding:32px 16px 60px;}
+  .art-grid{grid-template-columns:1fr;gap:20px;}
+  .art-thumb{height:300px;}
+  .section-title{margin:40px 0 18px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="cv.html">CV</a>
+  <a href="lately.html">Lately</a>
+  <a href="writing.html">Writing</a>
+</nav>
+
+<div class="page">
+
+  <h1 class="page-heading">create.</h1>
+  <p class="page-sub">still learning my way through all of this. very much an amateur for now.</p>
+
+  <!-- ART -->
+  <span class="section-title">Art</span>
+  <div class="art-grid">
+
+    <div class="art-card" onclick="openLight('duck')">
+      <img class="art-thumb" src="Art_3.jpg" alt="Duck in the pond">
+      <div class="art-name">Duck in the pond</div>
+    </div>
+
+    <div class="art-card" onclick="openLight('coffee')">
+      <img class="art-thumb" src="Art_4.jpg" alt="Coffee">
+      <div class="art-name">Coffee</div>
+    </div>
+
+    <div class="art-card" onclick="openLight('flowers')">
+      <img class="art-thumb" src="Art_1.jpg" alt="Flowers in the lake">
+      <div class="art-name">Flowers in the lake</div>
+    </div>
+
+    <div class="art-card" onclick="openLight('house')">
+      <img class="art-thumb" src="Art_2.jpg" alt="House">
+      <div class="art-name">House</div>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOXES -->
+  <div class="lightbox" id="lb-duck" onclick="closeLight('duck')">
+    <div class="lightbox-inner" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLight('duck')">Close ✕</button>
+      <div class="lightbox-title">Duck in the pond</div>
+      <img class="lightbox-img" src="Art_3.jpg" alt="Duck in the pond">
+      <p class="lightbox-desc">Digital illustration on iPad, created with reference to existing artwork.</p>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lb-coffee" onclick="closeLight('coffee')">
+    <div class="lightbox-inner" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLight('coffee')">Close ✕</button>
+      <div class="lightbox-title">Coffee</div>
+      <img class="lightbox-img" src="Art_4.jpg" alt="Coffee">
+      <p class="lightbox-desc">Digital illustration on iPad, created with reference to existing artwork.</p>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lb-flowers" onclick="closeLight('flowers')">
+    <div class="lightbox-inner" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLight('flowers')">Close ✕</button>
+      <div class="lightbox-title">Flowers in the lake</div>
+      <img class="lightbox-img" src="Art_1.jpg" alt="Flowers in the lake">
+      <p class="lightbox-desc">Original digital painting on iPad, inspired by Claude Monet's Water Lilies series.</p>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lb-house" onclick="closeLight('house')">
+    <div class="lightbox-inner" onclick="event.stopPropagation()">
+      <button class="lightbox-close" onclick="closeLight('house')">Close ✕</button>
+      <div class="lightbox-title">House</div>
+      <img class="lightbox-img" src="Art_2.jpg" alt="House">
+      <p class="lightbox-desc">Digital illustration on iPad, created with reference to existing artwork.</p>
+    </div>
+  </div>
+
+  <!-- BLENDER -->
+  <span class="section-title">Blender 3D</span>
+  <div class="blender-grid">
+
+    <div class="blender-item">
+      <video controls playsinline preload="auto" width="100%">
+        <source src="Blender_Cup.mp4" type="video/mp4">
+        <p>Your browser does not support video. <a href="Blender_Cup.mp4">Download the video</a>.</p>
+      </video>
+      <div class="blender-caption">Cup</div>
+      <div class="blender-sub">Blender 3D</div>
+    </div>
+
+    <div class="blender-item">
+      <video controls playsinline preload="auto" width="100%">
+        <source src="Blender_3D_Cute_character.mp4" type="video/mp4">
+        <p>Your browser does not support video. <a href="Blender_3D_Cute_character.mp4">Download the video</a>.</p>
+      </video>
+      <div class="blender-caption">Cute Character</div>
+      <div class="blender-sub">Blender 3D</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function openLight(id){document.getElementById('lb-'+id).classList.add('open');document.body.style.overflow='hidden';}
+function closeLight(id){document.getElementById('lb-'+id).classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.lightbox.open').forEach(function(el){el.classList.remove('open');});document.body.style.overflow='';}});
+</script>
+
+</body>
+</html>

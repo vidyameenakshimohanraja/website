@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work | Vidya Meenakshi</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;color:#000;min-height:100vh;display:flex;flex-direction:column;}
+
+nav{text-align:center;padding:36px 0 0;}
+nav a{
+  font-family:'EB Garamond',serif;
+  font-size:17px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:#000;
+  text-decoration:none;
+  margin:0 36px;
+}
+nav a{
+  padding:5px 14px;
+  border-radius:20px;
+  transition:background .2s, color .2s;
+  text-decoration:none !important;
+}
+nav a:hover{
+  background:#000;
+  color:#fff;
+  text-decoration:none !important;
+}
+
+.page{max-width:780px;margin:0 auto;padding:64px 40px 100px;}
+
+.page-title{
+  font-family:'EB Garamond',serif;
+  font-size:13px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:#000;
+  margin-bottom:60px;
+  display:block;
+}
+
+.timeline{position:relative;padding-left:36px;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;background:#000;
+}
+
+.timeline-item{position:relative;margin-bottom:56px;}
+.timeline-item::before{
+  content:'';position:absolute;
+  left:-40px;top:10px;
+  width:8px;height:8px;
+  border-radius:50%;background:#000;
+}
+
+.date{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(12px,1.5vw,14px);
+  letter-spacing:0.12em;
+  color:#000;margin-bottom:6px;
+  text-transform:uppercase;
+}
+.role{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(18px,2.5vw,22px);
+  font-weight:500;color:#000;
+  line-height:1.3;margin-bottom:3px;
+}
+.company{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(15px,2vw,18px);
+  font-style:italic;color:#000;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.co-logo{
+  height:22px;
+  width:auto;
+  object-fit:contain;
+  display:inline-block;
+  vertical-align:middle;
+  filter:grayscale(100%);
+  opacity:0.75;
+}
+.bullets{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(15px,1.8vw,17px);
+  line-height:1.9;color:#000;padding-left:18px;
+}
+.bullets li{margin-bottom:5px;}
+
+.vol-item{font-family:'EB Garamond',serif;color:#000;margin-bottom:8px;}
+.vol-role{font-size:clamp(18px,2.5vw,22px);font-weight:500;margin-bottom:3px;}
+.vol-company{font-size:clamp(14px,1.8vw,16px);font-style:italic;}
+.section-divider{
+  font-family:'EB Garamond',serif;
+  font-size:13px;letter-spacing:0.3em;
+  text-transform:uppercase;color:#000;
+  margin:72px 0 40px;display:block;
+}
+.skills-grid{
+  font-family:'EB Garamond',serif;
+  font-size:clamp(15px,1.8vw,17px);
+  line-height:2.1;color:#000;
+}
+.skill-label{font-style:italic;margin-right:4px;}
+
+/* TABLET PORTRAIT */
+@media (max-width:768px){
+  nav a{margin:0 20px;font-size:15px;}
+  .page{padding:48px 28px 80px;}
+  .timeline{padding-left:28px;}
+  .timeline-item::before{left:-32px;}
+}
+
+/* MOBILE PORTRAIT */
+@media (max-width:480px){
+  nav{padding:24px 0 0;}
+  nav a{margin:0 12px;font-size:14px;letter-spacing:0.12em;}
+  .page{padding:36px 20px 60px;}
+  .timeline{padding-left:22px;}
+  .timeline-item::before{left:-26px;width:7px;height:7px;}
+  .timeline-item{margin-bottom:44px;}
+  .page-title{margin-bottom:40px;}
+  .section-divider{margin:48px 0 28px;}
+}
+
+/* ── Bottom bar ── */
+.page-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 40px 32px;margin-top:60px;
+  border-top:1px solid #E8E8E8;
+}
+.page-bottom .bl{display:flex;align-items:center;text-decoration:none;transition:opacity .2s;}
+.page-bottom .bl:hover{opacity:.7;}
+.page-bottom .bl svg{width:26px;height:26px;transition:filter .3s;}
+.page-bottom .ml{color:#F5C518;}
+.page-bottom .ll{color:#0A66C2;}
+.page-bottom .ml:hover svg{filter:drop-shadow(0 0 5px rgba(245,197,24,0.8));}
+.page-bottom .ll:hover svg{filter:drop-shadow(0 0 5px rgba(10,102,194,0.8));}
+.page-bottom .cp{font-family:'EB Garamond',serif;font-size:12px;color:#aaa;text-align:center;}
+@media(max-width:480px){
+  .page-bottom{padding:18px 20px 24px;}
+  .page-bottom .bl svg{width:22px;height:22px;}
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="cv.html">CV</a>
+  <a href="lately.html">Lately</a>
+  <a href="writing.html">Writing</a>
+  <a href="create.html">Create</a>
+</nav>
+
+<div class="page">
+  <span class="page-title">Work Experience</span>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="date">Apr 2026 to Present</div>
+      <div class="role">Human Resource Intern</div>
+      <div class="company">
+        <img class="co-logo" src="https://logo.clearbit.com/mindmaptechnologies.com.sg" alt="" onerror="this.style.display='none'">
+        MindMap Technologies Pte Ltd
+      </div>
+      <ul class="bullets">
+        <li>Streamlined HR monitoring by building an interactive dashboard to track salary revisions, work order renewals, headcount, attrition, and leave utilisation</li>
+        <li>Strengthened cross-department messaging by standardising company-wide communication templates and assets</li>
+        <li>Supported end-to-end talent acquisition by shortlisting candidates, conducting preliminary screening calls, and consolidating profiles for hiring manager review</li>
+        <li>Maintained accurate employee master data, ensuring data integrity across the group</li>
+        <li>Managed work pass applications and renewals, and corporate insurance, ensuring compliance and timely processing</li>
+        <li>Handled HR email communications across the organisation, ensuring timely and professional responses to internal and external stakeholders</li>
+      </ul>
+    </div>
+
+        <div class="timeline-item">
+      <div class="date">Aug 2025 to Apr 2026</div>
+      <div class="role">Finance and Controlling Intern</div>
+      <div class="company">
+        <img class="co-logo" src="https://logo.clearbit.com/keenfinity.com" alt="" onerror="this.style.display='none'">
+        Keenfinity Pte Ltd
+      </div>
+      <ul class="bullets">
+        <li>Delivered actionable insights for 10+ senior stakeholders by analyzing consolidated product data across 10 APAC markets into structured PowerPoint decks</li>
+        <li>Strengthened regional strategy through data analysis on order intake, sales and risk reporting across 10 APAC markets using Excel models</li>
+        <li>Secured accuracy and on-time delivery by executing SAP pricing uploads across 5 product segments</li>
+        <li>Supported consistent messaging during a major client portfolio transformation through cross-functional collaboration across teams</li>
+        <li>Coordinated end-to-end logistics for a global Sales Kick-Off through cross-functional collaboration across venue, catering, and on-ground teams</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="date">Aug 2024 to Feb 2025</div>
+      <div class="role">Finance and Operations Intern</div>
+      <div class="company">
+        <img class="co-logo" src="https://logo.clearbit.com/bosch.com" alt="" onerror="this.style.display='none'">
+        Bosch ASEAN
+      </div>
+      <ul class="bullets">
+        <li>Improved process efficiency by coordinating a pricing automation initiative through cross-functional collaboration with IT and APAC stakeholders</li>
+        <li>Managed South Korea sales order deliveries by verifying payments and resolving credit blocks, ensuring timely fulfilment</li>
+        <li>Supported new hire onboarding by coordinating system access setup and operational essentials alongside HR</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="date">Sep 2022 to Jun 2023</div>
+      <div class="role">Student Engagement &amp; Outreach Officer</div>
+      <div class="company">
+        <img class="co-logo" src="https://logo.clearbit.com/bham.ac.uk" alt="" onerror="this.style.display='none'">
+        University of Birmingham
+      </div>
+      <ul class="bullets">
+        <li>Designed digital signage for the university library's Pets as Therapy event</li>
+        <li>Provided guidance on campus resources, rent guarantor, and library services</li>
+        <li>Coordinated meetings and learning initiatives with first-year undergraduates</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <span class="section-divider">Volunteering</span>
+  <div class="vol-item">
+    <div class="vol-role">Content Writer Volunteer</div>
+    <div class="vol-company"><img class="co-logo" src="https://logo.clearbit.com/twis.sg" alt="" onerror="this.style.display='none'" style="margin-right:8px">TWIS Singapore &nbsp;·&nbsp; June 2026 to Present</div>
+    <ul class="bullets" style="margin-top:12px">
+      <li>Produce written pieces on mental health, emotional wellbeing, and healthy living biweekly</li>
+      <li>Collaborated with designers on a careers campaign, contributing content strategy and copywriting for promotional materials</li>
+    </ul>
+  </div>
+  <div class="vol-item" style="margin-top:32px">
+    <div class="vol-role">Curriculum Designer Volunteer</div>
+    <div class="vol-company"><img class="co-logo" src="https://logo.clearbit.com/youthcorps.sg" alt="" onerror="this.style.display='none'" style="margin-right:8px">YouthCorps Singapore &nbsp;·&nbsp; Aug 2025 to Nov 2025</div>
+    <ul class="bullets" style="margin-top:12px">
+      <li>Designed P2 math workbooks, Kahoot games, and interactive quiz sheets on a weekly basis</li>
+    </ul>
+  </div>
+
+  <span class="section-divider">Skills &amp; Tools</span>
+  <div class="skills-grid">
+    <div><span class="skill-label">Tools:</span> R, Tableau, Excel, PowerPoint, Blender 3D, Canva, CapCut</div>
+    <div><span class="skill-label">Skills:</span> Event Coordination, Logistics Planning, Regional Stakeholder Management, Creativity</div>
+    <div><span class="skill-label">Certified:</span> Hubspot Content Marketing, Google Digital Marketing and E-Commerce, Instructional Design: Foundation and Applications (University of Illinois)</div>
+    <div><span class="skill-label">Preparing:</span> TOPIK, CEI Singapore</div>
+  </div>
+</div>
+
+
+<div style="text-align:center;padding:32px 0 24px;font-family:'EB Garamond',serif;font-size:14px;color:#aaa;">
+  &copy; 2026 Vidya Meenakshi. All rights reserved.
+</div>
+</body>
+</html>
